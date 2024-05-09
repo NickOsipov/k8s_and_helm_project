@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-config
+data:
+  name: {{ .Values.app.version | quote }}
+  {{- if eq .Values.env "production" }}
+  paymentToken: "1234"
+  {{- else }}
+  paymentToken: false
+  {{- end }}
+  {{- with .Values.value.requirements.limits }}
+  memory: {{ .memory }}
+  cpu: {{ .cpu }}
+  version: {{ $.Release.name }}
+  {{- end }}
