@@ -24,14 +24,17 @@ api:
 
 postgres:
   name: postgres
-  replicas: 1
-  components: backend
-  image: antonlarichev/short-api
-  version: v1.0
+  image: postgres
+  components: postgres
+  version: 16.0
   port: 5432
   limits: 
     memory: "500Mi"
-    cpu: "200m"
+    cpu: "300m"
+  envs:
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    - POSTGRES_DB
 
 database:
   user: demo
