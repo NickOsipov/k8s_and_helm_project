@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.api.name}}-deployment
+  name: {{ .Values.api.name }}-deployment
 spec:
   replicas: {{ .Values.api.replicas }}
   selector:
@@ -9,14 +9,12 @@ spec:
       components: {{ .Values.api.components }}
   template:
     metadata:
-      name: {{ .Values.api.name }}
       labels:
         components: {{ .Values.api.components }}
     spec:
       containers:
         - name: {{ .Values.api.name }}
           image: "{{ .Values.api.image }}:{{ .Values.api.version }}"
-          imagePullPolicy: Always
           ports:
             - containerPort: {{ .Values.api.port }}
           resources:
@@ -24,7 +22,7 @@ spec:
           env:
             {{- range .Values.api.envs }}
             {{- $data := dict "name" $.Values.api.name "env" . }}
-            {{- include "env.template" $data | nindent 12 }}
+            {{- include "env.template" $data | indent 12 }}
             {{- end }}
           livenessProbe:
             exec:

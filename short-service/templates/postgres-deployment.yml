@@ -9,21 +9,20 @@ spec:
       components: {{ .Values.postgres.components }}
   template:
     metadata:
-      name: {{ .Values.postgres.name }}
       labels:
         components: {{ .Values.postgres.components }}
     spec:
       containers:
         - name: {{ .Values.postgres.name }}
-          image: "{{ .Values.postgres.name }}:{{ .Values.postgres.version }}"
+          image: "{{ .Values.postgres.image }}:{{ .Values.postgres.version }}"
           ports:
             - containerPort: {{ .Values.postgres.port }}
           resources:
             limits: {{ .Values.postgres.limits | toYaml | nindent 14 }}
-          envs:
+          env:
             {{- range .Values.postgres.envs }}
             {{- $data := dict "name" $.Values.postgres.name "env" . }}
-            {{- include "env.template" $data | nindent 12 }}
+            {{- include "env.template" $data | indent 12 }}
             {{- end }}
           volumeMounts:
             - name: "{{ .Values.postgres.name }}-data"
