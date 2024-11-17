@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.api.name }}-deployment
+  name: "{{ .Values.api.name }}-deployment"
 spec:
   replicas: {{ .Values.api.replicas }}
   selector:
@@ -20,10 +20,10 @@ spec:
           resources:
             limits: {{ .Values.api.limits | toYaml | nindent 14 }}
           env:
-            {{- range .Values.api.envs }}
-            {{- $data := dict "name" $.Values.api.name "env" . }}
-            {{- include "env.template" $data | nindent 12 }}
-            {{- end }}
+            {{- range .Values.api.envs -}}
+              {{- $data := dict "name" $.Values.api.name "env" . }}
+              {{- include "env.template" $data | nindent 12 -}}
+            {{- end -}}
           # livenessProbe:
           #   exec:
           #     command:

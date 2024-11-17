@@ -25,7 +25,7 @@ spec:
             {{- include "env.template" $data | nindent 12 }}
             {{- end }}
           volumeMounts:
-            - name: {{ .Values.postgres.name }}-data
+            - name: "{{ .Values.postgres.name }}-data"
               mountPath: /var/lib/postgresql/data
               subPath: postgres
       volumes:
